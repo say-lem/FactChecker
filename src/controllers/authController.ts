@@ -15,7 +15,7 @@ export const signup = async (req: Request, res: Response) => {
   res.json({ token, user });
 };
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response): Promise<Response | undefined> => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -24,3 +24,10 @@ export const login = async (req: Request, res: Response) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET!);
   res.json({ token, user });
 };
+
+
+
+
+
+
+

@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 
-export const signup = async (req: Request, res: Response) => {
+export const signup = async (req: Request, res: Response): Promise<any | undefined> => {
   const { username, email, password } = req.body;
   const existing = await User.findOne({ email });
   if (existing) return res.status(400).json({ msg: 'User exists' });
@@ -15,7 +15,7 @@ export const signup = async (req: Request, res: Response) => {
   res.json({ token, user });
 };
 
-export const login = async (req: Request, res: Response): Promise<Response | undefined> => {
+export const login = async (req: Request, res: Response): Promise<any | undefined> => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user || !(await bcrypt.compare(password, user.password))) {

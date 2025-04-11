@@ -1,8 +1,10 @@
 
 export interface IQuery {
-    userId: string;
-    text: string;
-    resultFromAPI?: string; // result from Google Fact Check
-    createdAt?: Date;
-  }
+  userId: string;
+  text: string;
+  verdictFromApi?: any[]; 
+  createdAt?: Date;
+  upvotes?: number;
+  downvotes?: number;
+}
   

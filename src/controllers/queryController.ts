@@ -6,26 +6,28 @@ interface AuthenticatedRequest extends Request {
     user?: any;
   }
 
-export const postQuery = async (req: Request, res: Response) => {
+  //post a query if user exists
+  export const postQuery = async (req: Request, res: Response) => {
     const userId = req.user?.id;
     const { text } = req.body;
-
+  
     try {
-        const verdictFromApi = await checkFact(text);
-        const newQuery = await Query.create({
-            text,
-            userId,
-            verdictFromApi,
-            upvotes: 0,
-            downvotes: 0,
-        });
-        res.status(201).json(newQuery); //  201 for successful creation
+      const allClaims = await checkFact(text); 
+      const newQuery = await Query.create({
+        text,
+        userId,
+        verdictFromApi: allClaims, 
+        upvotes: 0,
+        downvotes: 0,
+      });
+      res.status(201).json(newQuery);
     } catch (error: any) {
-        console.error("Error creating query:", error);
-        res.status(500).json({ error: "Failed to create query" });
+      console.error("Error creating query:", error);
+      res.status(500).json({ error: "Failed to create query" });
     }
-};
+  };
 
+//get all queries
 export const getQueries = async (_req: Request, res: Response) => {
     try {
         const queries = await Query.find().sort({ createdAt: -1 });
@@ -35,3 +37,9 @@ export const getQueries = async (_req: Request, res: Response) => {
         res.status(500).json({ error: "Failed to fetch queries" });
     }
 };
+
+// get query by ID
+export const getQueryById = async (req: Request, res: Response) => {
+   
+  };
+

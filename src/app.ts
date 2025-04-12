@@ -5,6 +5,7 @@ import { connectDB } from './config/db';
 import authRoutes from './routes/authRoutes';
 import queryRoutes from './routes/queryRoutes';
 import commentRoutes from './routes/commentRoutes';
+import ratingRoutes from './routes/ratingRoutes';
 
 dotenv.config();
 connectDB();
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/queries', queryRoutes);
 app.use('/api/comments', commentRoutes);
+app.use(ratingRoutes);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {

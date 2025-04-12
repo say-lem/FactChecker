@@ -1,10 +1,10 @@
+import { Types } from "mongoose";
 
 export interface IQuery {
-  userId: string;
+  userId: Types.ObjectId;
   text: string;
-  verdictFromApi?: any[]; 
+  verdictFromApi?: any[];
   createdAt?: Date;
   upvotes?: number;
   downvotes?: number;
 }
-  

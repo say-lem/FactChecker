@@ -1,7 +1,9 @@
+import mongoose, { Types } from "mongoose";
+
 export interface IComment {
-    commentId: string;
-    queryId: string;
-    userId: string; // ID of the user who made the comment
-    comment: string; 
-    createdAt?: Date; 
-}
+    queryId: string | Types.ObjectId;
+    userId: string | Types.ObjectId;
+    comment: string;
+    createdAt?: Date;
+  }
+  

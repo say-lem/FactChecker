@@ -4,11 +4,10 @@ import { IComment } from "../interfaces/commentInterface";
 export interface CommentDocument extends IComment, Document {}
 
 const CommentSchema: Schema = new Schema<CommentDocument>({
-    commentId: { type: String, required: true },
-    queryId: {type: String, required: true},
-    userId:{ type: String, required: true}, 
-    comment: { type: String, required: true}, 
-    createdAt: {type: Date, default: Date.now},
+  queryId: { type: Schema.Types.ObjectId, ref: "Query", required: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  comment: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
 export default mongoose.model<CommentDocument>("Comment", CommentSchema);

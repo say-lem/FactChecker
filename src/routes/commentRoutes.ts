@@ -1,11 +1,11 @@
-import express from 'express';  
-import { postComment, getComment, deleteComment } from '../controllers/commentController';
+import express from 'express';
+import { postComment, getCommentsByQueryId, deleteComment } from '../controllers/commentController';
+import { authenticate } from '../middlewares/auth';
 
 const router = express.Router();
 
-
-router.post('/', postComment);  
-router.get('/', getComment);
-router.delete('/', deleteComment)
+router.post('/', authenticate, postComment);
+router.get('/:queryId', getCommentsByQueryId); 
+router.delete('/:id', authenticate, deleteComment);
 
 export default router;

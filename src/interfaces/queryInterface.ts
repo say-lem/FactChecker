@@ -1,8 +1,10 @@
+import { Types } from "mongoose";
 
 export interface IQuery {
-    userId: string;
-    text: string;
-    resultFromAPI?: string; // result from Google Fact Check
-    createdAt?: Date;
-  }
-  
+  userId: Types.ObjectId;
+  text: string;
+  verdictFromApi?: any[];
+  createdAt?: Date;
+  upvotes?: number;
+  downvotes?: number;
+}

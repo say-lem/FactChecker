@@ -6,7 +6,6 @@ interface AuthenticatedRequest extends Request {
     user?: any;
   }
 
-  //post a query if user exists
   export const postQuery = async (req: Request, res: Response) => {
     const userId = req.user?.id;
     const { text } = req.body;
@@ -27,21 +26,44 @@ interface AuthenticatedRequest extends Request {
     }
   };
 
-//get all queries
 export const getQueries = async (_req: Request, res: Response) => {
     try {
-      const queries = await Query.find()
-      .populate('userId', 'username -_id')
-        .sort({ createdAt: -1 });
+      const queries = await Query.aggregate([
+        {
+          $lookup: {
+            from: 'comments', 
+            localField: '_id',
+            foreignField: 'queryId',
+            as: 'comments',
+          },
+        },
+        {
+          $addFields: {
+            commentCount: { $size: '$comments' },
+          },
+        },
+        {
+          $sort: { createdAt: -1 },
+        },
+        {
+          $project: {
+            comments: 0, 
+          },
+        },
+      ]);
   
-      res.json(queries);
+      const queriesWithUser = await Query.populate(queries, {
+        path: 'userId',
+        select: 'username -_id',
+      });
+  
+      res.json(queriesWithUser);
     } catch (error: any) {
       console.error("Error fetching queries:", error);
       res.status(500).json({ error: "Failed to fetch queries" });
     }
   };
 
-// get query by ID
 export const getQueryById = async (req: Request, res: Response) => {
    
   };

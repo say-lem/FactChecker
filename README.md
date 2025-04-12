@@ -2,6 +2,7 @@
 
 A web-based tool to verify the truthfulness of user-submitted claims using NLP, semantic search, and fact-checked sources.
 
+Ps: NLP stands for "Natural Language Processing". It's a field of artificial intelligence (AI) that focuses on how computers can understand, interpret, and generate human language.
 
 ## Features
 
@@ -75,3 +76,4 @@ Push to your branch
 
 Create a Pull Request
 
+####

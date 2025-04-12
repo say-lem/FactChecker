@@ -30,13 +30,16 @@ interface AuthenticatedRequest extends Request {
 //get all queries
 export const getQueries = async (_req: Request, res: Response) => {
     try {
-        const queries = await Query.find().sort({ createdAt: -1 });
-        res.json(queries);
+      const queries = await Query.find()
+      .populate('userId', 'username -_id')
+        .sort({ createdAt: -1 });
+  
+      res.json(queries);
     } catch (error: any) {
-        console.error("Error fetching queries:", error);
-        res.status(500).json({ error: "Failed to fetch queries" });
+      console.error("Error fetching queries:", error);
+      res.status(500).json({ error: "Failed to fetch queries" });
     }
-};
+  };
 
 // get query by ID
 export const getQueryById = async (req: Request, res: Response) => {
